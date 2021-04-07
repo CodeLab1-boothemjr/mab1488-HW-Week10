@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8062772978208752645}
+  - component: {fileID: 4105403681210657467}
   - component: {fileID: 797393516421581360}
+  - component: {fileID: 4755487054020111044}
   m_Layer: 0
   m_Name: Dot
   m_TagString: Untagged
@@ -31,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4105403681210657467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394454890272294712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180c47c998f7f49469c9fdf37032f560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultColor: {fileID: 2100000, guid: 57a004332d273e740976f03205057982, type: 2}
+  hoverColor: {fileID: 2100000, guid: 878191d5c32aa184b88cf42bda0b8c78, type: 2}
+  selectedColor: {fileID: 2100000, guid: c0e185bf8c2b6604c923122eda15918a, type: 2}
 --- !u!212 &797393516421581360
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -81,3 +98,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &4755487054020111044
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394454890272294712}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

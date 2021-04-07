@@ -2,13 +2,13 @@
 
 ## planned features:
 
-* set grid zoom + positioning
 * respond to mouse clicks on dots
-* add custom gruide size
+* set grid zoom + positioning - requires thinking through the logic of it
+* add custom grid size
 
 ## controls:
 
-* EXAMPLE
+* [Wikipedia](https://en.wikipedia.org/wiki/Dots_and_Boxes) page for reference.
 
 ## bugs:
 
