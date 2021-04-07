@@ -21,6 +21,13 @@ public class GameManager : MonoBehaviour
     // Draw the grid of dots
     void DrawGrid()
     {
-        var dot = Instantiate(dotPrefab);
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                var dot = Instantiate(dotPrefab);
+                dot.transform.position = new Vector3(x, y);
+            }
+        }
     }
 }

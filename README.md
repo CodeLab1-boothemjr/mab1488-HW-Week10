@@ -2,7 +2,6 @@
 
 ## planned features:
 
-* draw grid
 * set grid zoom + positioning
 * respond to mouse clicks on dots
 * add custom gruide size
