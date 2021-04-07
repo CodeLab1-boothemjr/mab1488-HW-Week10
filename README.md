@@ -1,8 +1,8 @@
 # mo-laura-george-HW-week10
 
-## planned features:
+## todo:
 
-* respond to mouse clicks on dots
+* add comments
 * set grid zoom + positioning - requires thinking through the logic of it
 * add custom grid size
 
@@ -12,4 +12,4 @@
 
 ## bugs:
 
-* EXAMPLE
+* none
