@@ -327,6 +327,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dotPrefab: {fileID: 5394454890272294712, guid: 801a08b41603c9d499d644ce2e383a9e,
     type: 3}
+  lineHorizontalPrefab: {fileID: 3621966749513518107, guid: 67187d8015d5d6c48b349914f8a00237,
+    type: 3}
+  lineVerticalPrefab: {fileID: 3621966749513518107, guid: f053b8b1ddd162b4d96ae95f18d47ed0,
+    type: 3}
 --- !u!4 &968199200
 Transform:
   m_ObjectHideFlags: 0

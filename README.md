@@ -2,8 +2,10 @@
 
 ## todo:
 
-* add lines building
+* add lines addition
+* add lines colors
 * add (auto)box building
+* add boxes building logic - 2d array needed for data
 * add score keeping
 * add player turn indicator
 * set grid zoom + positioning - requires thinking through the logic of it
