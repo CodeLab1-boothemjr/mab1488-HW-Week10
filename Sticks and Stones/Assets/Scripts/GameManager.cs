@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     {
         grid = new int[gridX, gridY]; // create grid given dimensions values
         DrawGrid();
-        //DrawLines();
+        DrawLines();
     }
 
     private void Update()

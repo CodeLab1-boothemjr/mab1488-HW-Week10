@@ -42,6 +42,9 @@ public class DotScript : MonoBehaviour
             GetComponent<SpriteRenderer> ().material = defaultColor;
         }
         selected = !selected;
+        
+        Debug.Log("x, y = " + xPos + ", " + yPos);
+
     }
 
     private void OnMouseEnter()
