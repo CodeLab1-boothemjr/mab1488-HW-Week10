@@ -9,12 +9,12 @@ public class DotScript : MonoBehaviour
     public Material hoverColor;
     public Material selectedColor;
 
-    private Boolean selected;
+    private Boolean selected; // if the dot is currently selected
     
     // Start is called before the first frame update
     void Start()
     {
-        selected = false;
+        selected = false; // start the dot as not selected
     }
 
     // Update is called once per frame
@@ -25,12 +25,16 @@ public class DotScript : MonoBehaviour
     
     private void OnMouseDown()
     {
+        // if already selected when clicked
         if (selected)
         {
+            // change to default color
             GetComponent<SpriteRenderer> ().material = defaultColor;
         }
+        // if not already selected when clicked
         else
         {
+            // change to selected color
             GetComponent<SpriteRenderer> ().material = selectedColor;
         }
         selected = !selected;
@@ -38,6 +42,7 @@ public class DotScript : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        // ignore hover color if dot has been selected
         if (!selected)
         {
             GetComponent<SpriteRenderer> ().material = hoverColor;
@@ -46,6 +51,7 @@ public class DotScript : MonoBehaviour
     
     private void OnMouseExit()
     {
+        // ignore hover UNcolor if dot has been selected
         if (!selected)
         {
             GetComponent<SpriteRenderer> ().material = defaultColor;

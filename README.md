@@ -2,7 +2,6 @@
 
 ## todo:
 
-* add comments
 * add lines building
 * add (auto)box building
 * add score keeping

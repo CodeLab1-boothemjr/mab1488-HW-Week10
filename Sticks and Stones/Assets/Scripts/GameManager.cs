@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private readonly int gridX = 3;
-    private readonly int gridY = 3;
+    private readonly int gridX = 3; // horizontal grid size of dots
+    private readonly int gridY = 3; // vertical grid size of dots
     
     public GameObject dotPrefab;
     
