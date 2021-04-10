@@ -26,6 +26,11 @@ public class DotScript : MonoBehaviour
         xPos = x;
         yPos = y;
     }
+
+    public string GetCoordinates()
+    {
+        return "x, y = " + xPos + ", " + yPos;
+    }
     
     private void OnMouseDown()
     {
@@ -43,7 +48,10 @@ public class DotScript : MonoBehaviour
         }
         selected = !selected;
         
-        Debug.Log("x, y = " + xPos + ", " + yPos);
+        //todo - remove comment
+        //Debug.Log("x, y = " + xPos + ", " + yPos);
+        
+        
 
     }
 

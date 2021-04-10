@@ -10,6 +10,7 @@
 * add player turn indicator
 * set grid zoom + positioning - requires thinking through the logic of it
 * add custom grid size
+* optimize GameManager.Update.GetMouseButtonDown(), it's "expensive"
 
 ## controls:
 
