@@ -26,22 +26,32 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        GameObject clickedObject =  GetClickedObject();
+        if (clickedObject != null)
+        {
+            Debug.Log(clickedObject.GetComponent<DotScript>().CoordinatesToString());
+        }
+    }
+
+    private GameObject GetClickedObject()
+    {
         //on left click
         if (Input.GetMouseButtonDown(0))
         {
             //get the position of the mouse
             Vector2 mousePosition = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             //cast a ray from the point of the mouse
-            Ray ray = mainCamera.ScreenPointToRay (mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(mousePosition);
             //store the first thing it hits into a var
-            RaycastHit2D hit2D = Physics2D.GetRayIntersection (ray);
+            RaycastHit2D hit2D = Physics2D.GetRayIntersection(ray);
             //if it hit something, ie. it's not null
             if (hit2D.collider != null)
             {
                 //print the coordinates of the dot it hits
-                Debug.Log(hit2D.collider.gameObject.GetComponent<DotScript>().GetCoordinates());
+                return hit2D.collider.gameObject;
             }
         }
+        return null;
     }
 
     // Draw the grid of dots

@@ -27,7 +27,7 @@ public class DotScript : MonoBehaviour
         yPos = y;
     }
 
-    public string GetCoordinates()
+    public string CoordinatesToString()
     {
         return "x, y = " + xPos + ", " + yPos;
     }
