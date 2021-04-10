@@ -15,11 +15,25 @@ public class GameManager : MonoBehaviour
     private int[,] grid;
     private Camera mainCamera;
 
+    private GameObject firstDot;
+    private GameObject secondDot;
+    private int[] firstDotCoord;
+    private int[] secondDotCoord;
+
+    
+    private bool isFirstDotSelected = false;
+    private bool isSecondDotSelected = false;
+
+    
+
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
         grid = new int[gridX, gridY]; // create grid given dimensions values
+        firstDotCoord = new int[2];
+        secondDotCoord = new int[2];
+
         DrawGrid();
         DrawLines();
     }
@@ -27,9 +41,28 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         GameObject clickedObject =  GetClickedObject();
-        if (clickedObject != null)
+        if (clickedObject != null) //todo - switch null check to boolean
         {
-            Debug.Log(clickedObject.GetComponent<DotScript>().CoordinatesToString());
+            if (!isFirstDotSelected)
+            {
+                firstDot = clickedObject;
+                firstDot.GetComponent<DotScript>().SelectDot();
+                firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates();
+                isFirstDotSelected = true;
+            }
+            else if (!isSecondDotSelected)
+            {
+                secondDot = clickedObject;
+                secondDot.GetComponent<DotScript>().SelectDot();
+                secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates();
+                isSecondDotSelected = true;
+            }
+            else
+            {
+                Debug.Log("dot1 = " + firstDotCoord[0] + ", " + firstDotCoord[1] 
+                            + "\n dot2 = " + secondDotCoord[0] + ", " + secondDotCoord[1]);
+                //Debug.Log("Both dots have already been selected.");
+            }
         }
     }
 
@@ -74,5 +107,12 @@ public class GameManager : MonoBehaviour
     {
         var line = Instantiate(lineHorizontalPrefab);
         var line2 = Instantiate(lineVerticalPrefab);
+    }
+    
+    // draw a line between two dots
+    void DrawLine()
+    {
+        //var line = Instantiate(lineHorizontalPrefab);
+        //var line2 = Instantiate(lineVerticalPrefab);
     }
 }

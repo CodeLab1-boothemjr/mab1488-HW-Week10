@@ -10,9 +10,9 @@ public class DotScript : MonoBehaviour
     public Material selectedColor;
 
     private Boolean selected; // if the dot is currently selected
-
-    private int xPos = -1;
-    private int yPos = -1;
+    
+    public int[] coordinates;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -23,16 +23,21 @@ public class DotScript : MonoBehaviour
     // stores the coordinates of the dot in the game object
     public void SetCoordinates(int x, int y)
     {
-        xPos = x;
-        yPos = y;
-    }
-
-    public string CoordinatesToString()
-    {
-        return "x, y = " + xPos + ", " + yPos;
+        coordinates = new[] {x, y};
     }
     
-    private void OnMouseDown()
+    public int[] GetCoordinates()
+    {
+        return coordinates;
+    }
+    
+    // todo: consider removing if unused
+    public string CoordinatesToString()
+    {
+        return "x, y = " + coordinates[0] + ", " + coordinates[1];
+    }
+    
+    public void SelectDot()
     {
         // if not already selected when clicked
         if (!selected)
@@ -48,11 +53,6 @@ public class DotScript : MonoBehaviour
         }
         selected = !selected;
         
-        //todo - remove comment
-        //Debug.Log("x, y = " + xPos + ", " + yPos);
-        
-        
-
     }
 
     private void OnMouseEnter()
@@ -72,4 +72,5 @@ public class DotScript : MonoBehaviour
             GetComponent<SpriteRenderer> ().material = defaultColor;
         }
     }
+    
 }
