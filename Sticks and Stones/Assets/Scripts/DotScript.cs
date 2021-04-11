@@ -10,6 +10,7 @@ public class DotScript : MonoBehaviour
     public Material selectedColor;
 
     private Boolean selected; // if the dot is currently selected
+    public bool fullyOccupied;
     
     public int[] coordinates;
     
@@ -18,6 +19,7 @@ public class DotScript : MonoBehaviour
     void Start()
     {
         selected = false; // start the dot as not selected
+        fullyOccupied = false;
     }
 
     // stores the coordinates of the dot in the game object

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private readonly int gridX = 3; // horizontal grid size of dots
-    private readonly int gridY = 3; // vertical grid size of dots
+    private readonly int gridX = 10; // horizontal grid size of dots
+    private readonly int gridY = 10; // vertical grid size of dots
     
     public GameObject dotPrefab;
     public GameObject lineHorizontalPrefab;
@@ -19,12 +19,12 @@ public class GameManager : MonoBehaviour
     private GameObject secondDot;
     private int[] firstDotCoord;
     private int[] secondDotCoord;
-
     
     private bool isFirstDotSelected = false;
     private bool isSecondDotSelected = false;
 
-    
+    private List<GameObject> occupiedDots;
+    private List<GameObject> connections;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +34,11 @@ public class GameManager : MonoBehaviour
         firstDotCoord = new int[2];
         secondDotCoord = new int[2];
 
+        occupiedDots = new List<GameObject>();
+        connections = new List<GameObject>();
+
         DrawGrid();
-        DrawLines();
+        //DrawLines();
     }
 
     private void Update()
@@ -46,16 +49,47 @@ public class GameManager : MonoBehaviour
             if (!isFirstDotSelected)
             {
                 firstDot = clickedObject;
-                firstDot.GetComponent<DotScript>().SelectDot();
-                firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates();
-                isFirstDotSelected = true;
+
+                if (!firstDot.GetComponent<DotScript>().fullyOccupied)
+                {
+                    firstDot.GetComponent<DotScript>().SelectDot();
+                    firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates();
+                    isFirstDotSelected = true;
+                }
             }
             else if (!isSecondDotSelected)
             {
                 secondDot = clickedObject;
-                secondDot.GetComponent<DotScript>().SelectDot();
-                secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates();
-                isSecondDotSelected = true;
+                
+                if (!secondDot.GetComponent<DotScript>().fullyOccupied)
+                {
+                    secondDot.GetComponent<DotScript>().SelectDot();
+                    secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates();
+                    isSecondDotSelected = true;
+                    
+                    occupiedDots.Add(firstDot);
+                    occupiedDots.Add(secondDot);
+
+                    //need to check all perpendicular neighbors of each dot to see if there are any open moves, if not, make it fully occupied
+                    // if ()
+                    // {
+                    //     firstDot.GetComponent<DotScript>().fullyOccupied = true;
+                    // }
+                    //
+                    // if ()
+                    // {
+                    //     secondDot.GetComponent<DotScript>().fullyOccupied = true;
+                    // }
+                    
+                    DrawLine();
+
+                    firstDot = null;
+                    secondDot = null;
+
+                    isFirstDotSelected = false;
+                    isSecondDotSelected = false;
+                }
+
             }
             else
             {
@@ -90,9 +124,9 @@ public class GameManager : MonoBehaviour
     // Draw the grid of dots
     void DrawGrid()
     {
-        for (int x = 0; x < gridX; x++)
+        for (int x = -10; x < gridX; x++)
         {
-            for (int y = 0; y < gridY; y++)
+            for (int y = -10; y < gridY; y++)
             {
                 var dot = Instantiate(dotPrefab); // create a dot
                 dot.transform.position = new Vector3(x, y); // put dot in correct position
@@ -112,7 +146,22 @@ public class GameManager : MonoBehaviour
     // draw a line between two dots
     void DrawLine()
     {
-        //var line = Instantiate(lineHorizontalPrefab);
-        //var line2 = Instantiate(lineVerticalPrefab);
+        if (occupiedDots[occupiedDots.Count - 2].transform.position.x == occupiedDots[occupiedDots.Count - 1].transform.position.x)
+        {
+            var line2 = Instantiate(lineVerticalPrefab);
+            float yPos = occupiedDots[occupiedDots.Count - 2].transform.position.y +
+                         (occupiedDots[occupiedDots.Count - 1].transform.position.y - 
+                          occupiedDots[occupiedDots.Count - 2].transform.position.y) / 2;
+            line2.transform.position = new Vector2(occupiedDots[occupiedDots.Count - 2].transform.position.x, yPos);
+        }
+        else
+        {
+            var line = Instantiate(lineHorizontalPrefab);
+            
+            float xPos = occupiedDots[occupiedDots.Count - 2].transform.position.x +
+                         (occupiedDots[occupiedDots.Count - 1].transform.position.x - 
+                          occupiedDots[occupiedDots.Count - 2].transform.position.x) / 2;
+            line.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
+        }
     }
 }
