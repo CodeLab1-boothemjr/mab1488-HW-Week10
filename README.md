@@ -20,4 +20,4 @@
 
 ## bugs:
 
-* dot selection - if you select a dot, then deselect that same dot, then click that dot as the "third" dot... it will either let you click it anyways or throw a nullpointerexception
+* none
