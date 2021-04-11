@@ -37,7 +37,7 @@ public class DotScript : MonoBehaviour
         return "x, y = " + coordinates[0] + ", " + coordinates[1];
     }
     
-    public void SelectDot()
+    public void SwapDotSelection()
     {
         // if not already selected when clicked
         if (!selected)

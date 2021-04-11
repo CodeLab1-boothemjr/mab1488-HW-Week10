@@ -19,12 +19,9 @@ public class GameManager : MonoBehaviour
     private GameObject secondDot;
     private int[] firstDotCoord;
     private int[] secondDotCoord;
-
     
     private bool isFirstDotSelected = false;
     private bool isSecondDotSelected = false;
-
-    
 
     // Start is called before the first frame update
     void Start()
@@ -41,29 +38,55 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         GameObject clickedObject =  GetClickedObject();
-        if (clickedObject != null) //todo - switch null check to boolean
+        if (clickedObject != null)
         {
-            if (!isFirstDotSelected)
+            int[] tempCoord = clickedObject.GetComponent<DotScript>().GetCoordinates();
+            
+            // if new coord are already in the first dot slot
+            if (firstDotCoord == tempCoord)
             {
-                firstDot = clickedObject;
-                firstDot.GetComponent<DotScript>().SelectDot();
-                firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates();
-                isFirstDotSelected = true;
+                //deselect
+                clickedObject.GetComponent<DotScript>().SwapDotSelection();
+                //reset dot selected
+                firstDotCoord = null;
+                isFirstDotSelected = false;
             }
+            // if new coord are already in the second dot slot
+            else if (secondDotCoord == tempCoord)
+            {
+                //deselect
+                clickedObject.GetComponent<DotScript>().SwapDotSelection();
+                //reset do selected
+                firstDotCoord = null;
+                isSecondDotSelected = false;
+            }
+            // if first dot isn't selected
+            else if (!isFirstDotSelected)
+            {
+                firstDot = clickedObject; // store the clicked object into firstDot
+                firstDot.GetComponent<DotScript>().SwapDotSelection(); // "select" the dot
+                firstDotCoord = tempCoord; // store the coordinates
+                isFirstDotSelected = true; // set flag
+            }
+            // if second dot isn't selected
             else if (!isSecondDotSelected)
             {
-                secondDot = clickedObject;
-                secondDot.GetComponent<DotScript>().SelectDot();
-                secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates();
-                isSecondDotSelected = true;
+                secondDot = clickedObject; // stored the clicked object into secondDot
+                secondDot.GetComponent<DotScript>().SwapDotSelection(); // "select" the dot
+                secondDotCoord = tempCoord; // store the coordinates
+                isSecondDotSelected = true; // set flag
             }
             else
             {
                 Debug.Log("dot1 = " + firstDotCoord[0] + ", " + firstDotCoord[1] 
-                            + "\n dot2 = " + secondDotCoord[0] + ", " + secondDotCoord[1]);
+                          + "\n dot2 = " + secondDotCoord[0] + ", " + secondDotCoord[1]);
                 //Debug.Log("Both dots have already been selected.");
             }
+
         }
+
+        clickedObject = null; // clear the clicked object
+        
     }
 
     private GameObject GetClickedObject()
