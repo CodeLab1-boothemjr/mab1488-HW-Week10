@@ -28,7 +28,7 @@ public class LineScript : MonoBehaviour
         endPoint = new[] {x2, y2};
     }
 
-    List<int[]> GetCoordinates()
+    public List<int[]> GetCoordinates()
     {
         return new List<int[]>(){anchor, endPoint};
     }

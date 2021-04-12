@@ -183,6 +183,8 @@ public class GameManager : MonoBehaviour
             
             //todo - add this with the correct values.. it needs the starting point and ending point of the line
             //lineVer.GetComponent<LineScript>().SetCoordinates(x1, y1, x2, y2);
+            //todo - then uncomment this line to add it to the "lines database"
+            //lines.Add(lineVer.GetComponent<LineScript>().GetCoordinates());
             
         }
         else
@@ -195,7 +197,9 @@ public class GameManager : MonoBehaviour
             lineHor.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
             
             //todo - add this with the correct values.. it needs the starting point and ending point of the line
-            //lineVer.GetComponent<LineScript>().SetCoordinates(x1, y1, x2, y2);
+            //lineHor.GetComponent<LineScript>().SetCoordinates(x1, y1, x2, y2);
+            //todo - then uncomment this line to add it to the "lines database"
+            //lines.Add(lineHor.GetComponent<LineScript>().GetCoordinates());
         }
     }
     
