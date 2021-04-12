@@ -2,11 +2,15 @@
 
 ## todo:
 
+* add (auto)box building
+* 
+
+
+
 * add check if two dots are next to each other
 * add logic for choosing the correct "line", horizontal or vertical
 * add lines addition
 * add lines colors
-* add (auto)box building
 * add boxes building logic - 2d array needed for data
 * add score keeping
 * add player turn indicator
@@ -20,4 +24,4 @@
 
 ## bugs:
 
-* none
+* line gets misplaced when picking something not immediately next to it

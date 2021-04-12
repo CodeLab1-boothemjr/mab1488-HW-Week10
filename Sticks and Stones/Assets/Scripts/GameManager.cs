@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,9 +11,10 @@ public class GameManager : MonoBehaviour
     private readonly int gridY = 8; // vertical grid size of dots
     
     public GameObject dotPrefab;
+    public GameObject boxPrefab;
     public GameObject lineHorizontalPrefab;
     public GameObject lineVerticalPrefab;
-
+    
     private GameObject[,] grid;
     private Camera mainCamera;
 
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> occupiedDots;
     private List<GameObject[]> connections;
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -39,18 +43,23 @@ public class GameManager : MonoBehaviour
         connections = new List<GameObject[]>();
 
         DrawGrid();
-        //DrawLines();
-    }
+        //todo - for testing, will delete
+        DrawBoxes();
 
+    }
+    
     private void Update()
     {
         GameObject clickedObject =  GetClickedObject();
         if (clickedObject != null) //todo - switch null check to boolean
         {
+            // do stuff with the first dot if it hasn't been selected yet
             if (!isFirstDotSelected)
             {
+                // store firstDot as clickedobject
                 firstDot = clickedObject;
 
+                
                 if (!firstDot.GetComponent<DotScript>().fullyOccupied)
                 {
                     firstDot.GetComponent<DotScript>().SelectDot();
@@ -58,6 +67,8 @@ public class GameManager : MonoBehaviour
                     isFirstDotSelected = true;
                 }
             }
+            
+            // do stuff with the second dot if it hasn't been selected yet
             else if (!isSecondDotSelected)
             {
                 secondDot = clickedObject;
@@ -89,23 +100,28 @@ public class GameManager : MonoBehaviour
                     connections.Add(connection);
 
                     DrawLine();
-
+                    
+                    // empty selected dot vars
                     isFirstDotSelected = false;
                     isSecondDotSelected = false;
                     
+                    // switch dot colors
                     secondDot.GetComponent<DotScript>().SelectDot();
                     firstDot.GetComponent<DotScript>().SelectDot();
                     
+                    //todo - reimplement box-checking structure
+                    //check for box
                     FindBox(firstDot, secondDot);
                 }
 
             }
-            else
+            //todo - remove, only for debugging
+            /*else
             {
                 Debug.Log("dot1 = " + firstDotCoord[0] + ", " + firstDotCoord[1] 
                             + "\n dot2 = " + secondDotCoord[0] + ", " + secondDotCoord[1]);
                 //Debug.Log("Both dots have already been selected.");
-            }
+            }*/
         }
     }
 
@@ -145,24 +161,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
-    // TODO - remove after done testing + implementing
-    // Draw some lines
-    void DrawLines()
-    {
-        var line = Instantiate(lineHorizontalPrefab);
-        var line2 = Instantiate(lineVerticalPrefab);
-    }
-    
+
     // draw a line between two dots
     void DrawLine()
     {
         if (occupiedDots[occupiedDots.Count - 2].transform.position.x == occupiedDots[occupiedDots.Count - 1].transform.position.x)
         {
             var line2 = Instantiate(lineVerticalPrefab);
-            float yPos = occupiedDots[occupiedDots.Count - 2].transform.position.y +
-                         (occupiedDots[occupiedDots.Count - 1].transform.position.y - 
-                          occupiedDots[occupiedDots.Count - 2].transform.position.y) / 2;
+            /*todo - CHECK THIS CODE
+            i feel like this might be where the weird stuff of placing the lines is happening
+            the way the prefabs are set up, you should just be able to "instantiate" at whatever the anchor is, ie, 
+            whichever dot is closer to the bottom and the left
+            */
+            float yPos = occupiedDots[occupiedDots.Count - 2].transform.position.y + 
+                        (occupiedDots[occupiedDots.Count - 1].transform.position.y - 
+                         occupiedDots[occupiedDots.Count - 2].transform.position.y) / 2; // this /2 is what is telling me something is weird
             line2.transform.position = new Vector2(occupiedDots[occupiedDots.Count - 2].transform.position.x, yPos);
         }
         else
@@ -173,6 +186,20 @@ public class GameManager : MonoBehaviour
                          (occupiedDots[occupiedDots.Count - 1].transform.position.x - 
                           occupiedDots[occupiedDots.Count - 2].transform.position.x) / 2;
             line.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
+        }
+    }
+    
+    private void DrawBoxes()
+    {
+        for (int y = 0; y < gridY - 1; y++)
+        {
+            for (int x = 0; x < gridX - 1; x++)
+            {
+                var box = Instantiate(boxPrefab); // create a box
+                box.GetComponent<BoxScript>().SetAnchor(x, y); // set "anchor" to the bottom left-most point
+                box.transform.position = new Vector3(x - 3.5f, y - 2.5f, .01f); // put box in correct position
+                box.GetComponent<BoxScript>().HideBox(); // hide the box
+            }
         }
     }
 
