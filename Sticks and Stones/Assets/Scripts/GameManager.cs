@@ -5,13 +5,16 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // Generate the grid
     private readonly int gridX = 3; // horizontal grid size of dots
     private readonly int gridY = 3; // vertical grid size of dots
     
+    // Place to store the dots and lines prefabs
     public GameObject dotPrefab;
     public GameObject lineHorizontalPrefab;
     public GameObject lineVerticalPrefab;
 
+    
     private int[,] grid;
     private Camera mainCamera;
 
@@ -20,7 +23,7 @@ public class GameManager : MonoBehaviour
     private int[] firstDotCoord;
     private int[] secondDotCoord;
 
-    
+    // Variable to keep track if one or two dots have been selected
     private bool isFirstDotSelected = false;
     private bool isSecondDotSelected = false;
 
@@ -34,28 +37,28 @@ public class GameManager : MonoBehaviour
         firstDotCoord = new int[2];
         secondDotCoord = new int[2];
 
-        DrawGrid();
+        DrawGrid();                   //run the DrawGrid function
         DrawLines();
     }
 
     private void Update()
     {
-        GameObject clickedObject =  GetClickedObject();
+        GameObject clickedObject =  GetClickedObject();     //run the GetClickedObjects function
         if (clickedObject != null) //todo - switch null check to boolean
         {
-            if (!isFirstDotSelected)
+            if (!isFirstDotSelected)        //if there is not a first dot selected
             {
-                firstDot = clickedObject;
-                firstDot.GetComponent<DotScript>().SelectDot();
-                firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates();
-                isFirstDotSelected = true;
+                firstDot = clickedObject;   //store the selected dot as the first dot
+                firstDot.GetComponent<DotScript>().SelectDot(); //get the DotScript and run the SelectDot function
+                firstDotCoord = firstDot.GetComponent<DotScript>().GetCoordinates(); //get and store the coordinate of the selected dot
+                isFirstDotSelected = true;  //change isFirstDotSelected to true
             }
-            else if (!isSecondDotSelected)
+            else if (!isSecondDotSelected)   //if there is not a second dot selected  
             {
-                secondDot = clickedObject;
-                secondDot.GetComponent<DotScript>().SelectDot();
-                secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates();
-                isSecondDotSelected = true;
+                secondDot = clickedObject;   //store the selected dot as the second dot
+                secondDot.GetComponent<DotScript>().SelectDot(); //get the DotScript and run the SelectDot function
+                secondDotCoord = secondDot.GetComponent<DotScript>().GetCoordinates(); //get and store the coordinate of the selected dot
+                isSecondDotSelected = true;  //change isSecondDotSelected to true
             }
             else
             {

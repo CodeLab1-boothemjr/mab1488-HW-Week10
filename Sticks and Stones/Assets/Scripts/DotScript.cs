@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class DotScript : MonoBehaviour
 {
-    public Material defaultColor;
-    public Material hoverColor;
-    public Material selectedColor;
+    // Place to store the different materials use to differentiate between the state of the dots
+    public Material defaultColor;   //material for when not interacting with the dot
+    public Material hoverColor;     //material for hovering over the dot
+    public Material selectedColor;  //material for selected dot
 
-    private Boolean selected; // if the dot is currently selected
+    private Boolean selected;       //variable to determine if the dot is currently selected
     
-    public int[] coordinates;
-    
+    public int[] coordinates;       //place to store the coordinates of the dots
     
     // Start is called before the first frame update
     void Start()
     {
-        selected = false; // start the dot as not selected
+        selected = false;           //start all the dots as not selected
     }
 
-    // stores the coordinates of the dot in the game object
+    // Stores the coordinates of the dot in the game object
     public void SetCoordinates(int x, int y)
     {
         coordinates = new[] {x, y};
@@ -28,7 +28,7 @@ public class DotScript : MonoBehaviour
     
     public int[] GetCoordinates()
     {
-        return coordinates;
+        return coordinates;         //give the coordinates of the dot
     }
     
     // todo: consider removing if unused
@@ -55,22 +55,23 @@ public class DotScript : MonoBehaviour
         
     }
 
+    // When the mouse is over the dot
     private void OnMouseEnter()
     {
         // ignore hover color if dot has been selected
         if (!selected)
         {
-            GetComponent<SpriteRenderer> ().material = hoverColor;
+            GetComponent<SpriteRenderer> ().material = hoverColor;  //change the color of the material to indicate that the mouse is over it
         }
     }
     
+    // When the mouse leaves the dot
     private void OnMouseExit()
     {
         // ignore hover UNcolor if dot has been selected
         if (!selected)
         {
-            GetComponent<SpriteRenderer> ().material = defaultColor;
+            GetComponent<SpriteRenderer> ().material = defaultColor; //change the color of the material to indicate that the mouse left the dot
         }
     }
-    
 }
