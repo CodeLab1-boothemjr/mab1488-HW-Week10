@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private readonly int gridX = 10; // horizontal grid size of dots
-    private readonly int gridY = 10; // vertical grid size of dots
+    private readonly int gridX = 8; // horizontal grid size of dots
+    private readonly int gridY = 8; // vertical grid size of dots
     
     public GameObject dotPrefab;
     public GameObject lineHorizontalPrefab;
     public GameObject lineVerticalPrefab;
 
-    private int[,] grid;
+    private GameObject[,] grid;
     private Camera mainCamera;
 
     private GameObject firstDot;
@@ -24,18 +25,18 @@ public class GameManager : MonoBehaviour
     private bool isSecondDotSelected = false;
 
     private List<GameObject> occupiedDots;
-    private List<GameObject> connections;
+    private List<GameObject[]> connections;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
-        grid = new int[gridX, gridY]; // create grid given dimensions values
+        grid = new GameObject[gridX, gridY]; // create grid given dimensions values
         firstDotCoord = new int[2];
         secondDotCoord = new int[2];
 
         occupiedDots = new List<GameObject>();
-        connections = new List<GameObject>();
+        connections = new List<GameObject[]>();
 
         DrawGrid();
         //DrawLines();
@@ -81,13 +82,21 @@ public class GameManager : MonoBehaviour
                     //     secondDot.GetComponent<DotScript>().fullyOccupied = true;
                     // }
                     
-                    DrawLine();
 
-                    firstDot = null;
-                    secondDot = null;
+                    GameObject[] connection = new GameObject[2];
+                    connection[0] = firstDot;
+                    connection[1] = secondDot;
+                    connections.Add(connection);
+
+                    DrawLine();
 
                     isFirstDotSelected = false;
                     isSecondDotSelected = false;
+                    
+                    secondDot.GetComponent<DotScript>().SelectDot();
+                    firstDot.GetComponent<DotScript>().SelectDot();
+                    
+                    FindBox(firstDot, secondDot);
                 }
 
             }
@@ -124,13 +133,15 @@ public class GameManager : MonoBehaviour
     // Draw the grid of dots
     void DrawGrid()
     {
-        for (int x = -10; x < gridX; x++)
+        for (int y = 0; y < gridY; y++)
         {
-            for (int y = -10; y < gridY; y++)
+            for (int x = 0; x < gridX; x++)
             {
                 var dot = Instantiate(dotPrefab); // create a dot
-                dot.transform.position = new Vector3(x, y); // put dot in correct position
                 dot.GetComponent<DotScript>().SetCoordinates(x, y); // set coordinates in dot game object
+                dot.transform.position = new Vector3(x - 4, y - 3); // put dot in correct position
+
+                grid[x, y] = dot;
             }
         }
     }
@@ -163,5 +174,40 @@ public class GameManager : MonoBehaviour
                           occupiedDots[occupiedDots.Count - 2].transform.position.x) / 2;
             line.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
         }
+    }
+
+    //check if new connection completes a box
+    void FindBox(GameObject dot1, GameObject dot2)
+    {
+        int y = 0;
+        int x = 0;
+        
+        //these are the index values we can plug into the grid array to check neighbors
+        int xIndex = 0;
+        int yIndex = 0;
+        
+        for (x = 0; x < gridX; x++)
+        {
+            if (dot1.transform.position.x == grid[x,y].transform.position.x)
+            {
+                xIndex = x;
+            }
+        }
+        
+        for (y = 0; y < gridY; y++)
+        {
+            if (dot1.transform.position.y == grid[xIndex, y].transform.position.y)
+            {
+                yIndex = y;
+            }
+        }
+        
+        Debug.Log("first dot is at: " + xIndex + ", " + yIndex);
+        
+        //check if there is a connection made between neighboring spots
+        if(grid[xIndex - 1, yIndex - 1] )
+
+        firstDot = null;
+        secondDot = null;
     }
 }
