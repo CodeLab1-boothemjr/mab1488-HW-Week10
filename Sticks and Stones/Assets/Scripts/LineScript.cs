@@ -22,7 +22,7 @@ public class LineScript : MonoBehaviour
         
     }
 
-    void SetCoordinates(int x1, int y1, int x2, int y2)
+    public void SetCoordinates(int x1, int y1, int x2, int y2)
     {
         anchor = new[] {x1, y1};
         endPoint = new[] {x2, y2};

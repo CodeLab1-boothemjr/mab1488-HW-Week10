@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -28,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     private List<GameObject> occupiedDots;
     private List<GameObject[]> connections;
+
+    private List<List<int[]>> lines;
     
     
 
@@ -167,7 +170,7 @@ public class GameManager : MonoBehaviour
     {
         if (occupiedDots[occupiedDots.Count - 2].transform.position.x == occupiedDots[occupiedDots.Count - 1].transform.position.x)
         {
-            var line2 = Instantiate(lineVerticalPrefab);
+            var lineVer = Instantiate(lineVerticalPrefab);
             /*todo - CHECK THIS CODE
             i feel like this might be where the weird stuff of placing the lines is happening
             the way the prefabs are set up, you should just be able to "instantiate" at whatever the anchor is, ie, 
@@ -176,16 +179,23 @@ public class GameManager : MonoBehaviour
             float yPos = occupiedDots[occupiedDots.Count - 2].transform.position.y + 
                         (occupiedDots[occupiedDots.Count - 1].transform.position.y - 
                          occupiedDots[occupiedDots.Count - 2].transform.position.y) / 2; // this /2 is what is telling me something is weird
-            line2.transform.position = new Vector2(occupiedDots[occupiedDots.Count - 2].transform.position.x, yPos);
+            lineVer.transform.position = new Vector2(occupiedDots[occupiedDots.Count - 2].transform.position.x, yPos);
+            
+            //todo - add this with the correct values.. it needs the starting point and ending point of the line
+            //lineVer.GetComponent<LineScript>().SetCoordinates(x1, y1, x2, y2);
+            
         }
         else
         {
-            var line = Instantiate(lineHorizontalPrefab);
+            var lineHor = Instantiate(lineHorizontalPrefab);
             
             float xPos = occupiedDots[occupiedDots.Count - 2].transform.position.x +
                          (occupiedDots[occupiedDots.Count - 1].transform.position.x - 
                           occupiedDots[occupiedDots.Count - 2].transform.position.x) / 2;
-            line.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
+            lineHor.transform.position = new Vector2(xPos, occupiedDots[occupiedDots.Count - 2].transform.position.y);
+            
+            //todo - add this with the correct values.. it needs the starting point and ending point of the line
+            //lineVer.GetComponent<LineScript>().SetCoordinates(x1, y1, x2, y2);
         }
     }
     
